@@ -1,16 +1,18 @@
-package com.moviebooking.movie.Controller.HallController;
+package com.moviebooking.movie.controller.hallcontroller;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moviebooking.movie.Dto.HallType.HallTypeRequest;
-import com.moviebooking.movie.Dto.HallType.HallTypeResponse;
-import com.moviebooking.movie.Repository.HallRepo.HallTypeService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.moviebooking.movie.dto.halltype.HallTypeRequest;
+import com.moviebooking.movie.dto.halltype.HallTypeResponse;
+import com.moviebooking.movie.service.halltype.HallTypeService;
 
 @RestController
 @RequestMapping("/api/hall")
@@ -25,5 +27,11 @@ public class HallTypeController {
         HallTypeResponse response = halltypeservice.createHallType(request);
         return ResponseEntity.ok(response);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<HallTypeResponse>> getHalls() {
+        List<HallTypeResponse> response = halltypeservice.getHallType();
+        return ResponseEntity.ok(response);
     }
 }

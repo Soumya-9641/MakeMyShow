@@ -1,4 +1,4 @@
-package com.moviebooking.movie.dto.language;
+package com.moviebooking.movie.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +11,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LanguageRequest {
-    private String languageName;
+public class ReviewDTO {
+    private Integer userId;
+    private String content;
 }

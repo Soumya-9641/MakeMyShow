@@ -1,5 +1,6 @@
 package com.moviebooking.movie.model;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -11,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -19,19 +19,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
-@Table(name = "halltypes")
-public class HallType {
+public class Crew {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hallTypeId;
-    private String hallTypeName;
+    private Long crewId;
+    private String crewName;
+    private String famousAs;
+    private String details;
+    private String dob;
+    private List<String> industries;
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH })
-    @JoinTable(name = "movie_halltype", joinColumns = @JoinColumn(name = "hall_type_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @JoinTable(name = "movie_cast", joinColumns = @JoinColumn(name = "crew_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> movies;
 }
