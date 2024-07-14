@@ -3,14 +3,15 @@ package com.moviebooking.movie.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,22 +20,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+public class BookingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "id")
+    private Long id;
 
-    private String name;
-    private String email;
-    private String password;
-    private String phoneNumber;
+    private String price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    @JoinColumn(name = "seat_id", nullable = false)
+    private Seat seat;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    // private Set<Booking> bookings;
 }

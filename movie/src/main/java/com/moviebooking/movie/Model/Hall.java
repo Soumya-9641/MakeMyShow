@@ -44,4 +44,6 @@ public class Hall {
         private Set<HallType> hallTypes;
         @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
         private List<Show> shows;
+        @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
+        private List<Seat> seats;
 }

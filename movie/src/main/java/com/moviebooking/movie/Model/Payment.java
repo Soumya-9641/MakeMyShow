@@ -4,37 +4,35 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@Entity
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-
-    private String name;
-    private String email;
-    private String password;
-    private String phoneNumber;
+    private Long paymentId;
+    private Integer amount;
+    private String paymentMethod;
+    private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    // private Set<Booking> bookings;
 }
