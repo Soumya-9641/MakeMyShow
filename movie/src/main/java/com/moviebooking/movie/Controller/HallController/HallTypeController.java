@@ -15,7 +15,7 @@ import com.moviebooking.movie.dto.halltype.HallTypeResponse;
 import com.moviebooking.movie.service.halltype.HallTypeService;
 
 @RestController
-@RequestMapping("/api/hall")
+@RequestMapping("/api/halltype")
 
 public class HallTypeController {
 

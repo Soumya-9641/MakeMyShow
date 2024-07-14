@@ -12,10 +12,12 @@ import com.moviebooking.movie.dto.movie.GetMovieResponse;
 import com.moviebooking.movie.dto.movie.MovieRequest;
 import com.moviebooking.movie.dto.movie.MovieResponse;
 import com.moviebooking.movie.model.Cast;
+import com.moviebooking.movie.model.Crew;
 import com.moviebooking.movie.model.HallType;
 import com.moviebooking.movie.model.Language;
 import com.moviebooking.movie.model.Movie;
 import com.moviebooking.movie.repository.castcrew.CastRepo;
+import com.moviebooking.movie.repository.castcrew.CrewRepo;
 import com.moviebooking.movie.repository.hallrepo.HallTypeRepository;
 import com.moviebooking.movie.repository.languagerepo.LanguageRepository;
 import com.moviebooking.movie.repository.movie.MovieRepository;
@@ -35,6 +37,8 @@ public class MovieServiceImpl implements MovieService {
         private HallTypeRepository halltypeRepo;
         @Autowired
         private CastRepo castrepo;
+        @Autowired
+        private CrewRepo crewrepo;
 
         @Override
         public MovieResponse createMovie(MovieRequest request) {
@@ -61,6 +65,7 @@ public class MovieServiceImpl implements MovieService {
                         optionalHallType.ifPresent(hallTypes::add);
                 }
                 movie.setHallTypes(hallTypes);
+                movie.setTitle(request.getTitle());
                 Set<Cast> casts = new HashSet<>();
                 for (Long castId : request.getCastIds()) {
                         Optional<Cast> OptionalCast = castrepo.findById(castId);
@@ -68,7 +73,13 @@ public class MovieServiceImpl implements MovieService {
                 }
 
                 movie.setCast(casts);
-
+                // movie.setHallTypes(hallTypes);
+                Set<Crew> crews = new HashSet<>();
+                for (Long crewId : request.getCrewIds()) {
+                        Optional<Crew> OptionalCrew = crewrepo.findById(crewId);
+                        OptionalCrew.ifPresent(crews::add);
+                }
+                movie.setCrew(crews);
                 Movie savedMovie = movieRepo.save(movie);
 
                 // Since the movie object returned by the save method might not have the
@@ -80,6 +91,7 @@ public class MovieServiceImpl implements MovieService {
                 System.out.println(fetchedMovie.getLanguages());
                 MovieResponse response = new MovieResponse();
                 response.setDescription(fetchedMovie.getDescription());
+                response.setTitle(fetchedMovie.getTitle());
                 response.setDuration(fetchedMovie.getDuration());
                 response.setLikesCount(fetchedMovie.getLikesCount());
                 response.setTrailerLink(fetchedMovie.getTrailerLink());
@@ -91,6 +103,8 @@ public class MovieServiceImpl implements MovieService {
                                 .collect(Collectors.toSet()));
                 response.setCastName(
                                 fetchedMovie.getCast().stream().map(Cast::getCastName).collect(Collectors.toSet()));
+                response.setCrewName(
+                                fetchedMovie.getCrew().stream().map(Crew::getCrewName).collect(Collectors.toSet()));
                 return response;
         }
 
@@ -129,6 +143,11 @@ public class MovieServiceImpl implements MovieService {
                                 .map(cast -> new GetMovieResponse.CastDto(cast.getCastId(), cast.getCastName(),
                                                 cast.getFamousAs()))
                                 .collect(Collectors.toSet()));
+                response.setCrews(
+                                movie.getCrew().stream()
+                                                .map(crew -> new GetMovieResponse.CrewDto(crew.getCrewId(),
+                                                                crew.getCrewName(), crew.getFamousAs()))
+                                                .collect(Collectors.toSet()));
                 return response;
 
         }

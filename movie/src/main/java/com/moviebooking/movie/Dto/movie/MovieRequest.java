@@ -21,5 +21,6 @@ public class MovieRequest {
     private Set<Long> languageIds;
     private Set<Long> hallTypeIds;
     private Set<Long> castIds;
+    private Set<Long> crewIds;
 
 }

@@ -13,10 +13,12 @@ public class MovieResponse {
     private Long movie_id;
     private String description;
     private String duration;
+    private String title;
     private String trailerLink;
     private Integer likesCount;
     private Integer viewsCount;
     private Set<String> languages;
     private Set<String> hallTypes;
     private Set<String> castName;
+    private Set<String> crewName;
 }

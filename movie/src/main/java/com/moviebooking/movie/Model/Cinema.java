@@ -1,6 +1,6 @@
 package com.moviebooking.movie.model;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -19,22 +19,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Crew {
+public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long crewId;
-    private String crewName;
-    private String famousAs;
-    private String details;
-    private String dob;
-    private List<String> industries;
+    private Long cinemaId;
+    private String name;
+    private String location;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH })
-    @JoinTable(name = "movie_crew", joinColumns = @JoinColumn(name = "crew_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private Set<Movie> movies;
+    @JoinTable(name = "cinema_hall", joinColumns = @JoinColumn(name = "cinema_id"), inverseJoinColumns = @JoinColumn(name = "hall_id"))
+    private Set<Hall> halls;
 }

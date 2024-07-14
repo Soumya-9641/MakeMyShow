@@ -39,6 +39,6 @@ public class Cast {
     // private Set<Movie> movies;
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH })
-    @JoinTable(name = "movie_crew", joinColumns = @JoinColumn(name = "cast_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @JoinTable(name = "movie_cast", joinColumns = @JoinColumn(name = "cast_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> movies;
 }

@@ -24,6 +24,7 @@ public class GetMovieResponse {
     private Set<HallTypeDto> hallTypes;
     private Set<ReviewsDto> reviews;
     private Set<CastDto> casts;
+    private Set<CrewDto> crews;
 
     @Data
     @NoArgsConstructor
@@ -55,6 +56,15 @@ public class GetMovieResponse {
     public static class CastDto {
         private Long castId;
         private String castName;
+        private String famousAs;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CrewDto {
+        private Long crewId;
+        private String crewName;
         private String famousAs;
     }
 

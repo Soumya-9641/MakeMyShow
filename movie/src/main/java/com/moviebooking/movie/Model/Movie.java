@@ -61,5 +61,7 @@ public class Movie {
                         CascadeType.REFRESH })
         @JoinTable(name = "movie_crew", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "crew_id"))
         private Set<Crew> crew;
+        @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+        private List<Show> shows;
 
 }
