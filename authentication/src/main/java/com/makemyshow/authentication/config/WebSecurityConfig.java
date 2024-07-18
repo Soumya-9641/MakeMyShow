@@ -13,9 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     private static final String[] WHITE_LIST_URLS = {
             "/api/*",
+            "/swagger-ui.html",
             "/api/register",
-            "/verifyRegistration*",
-            "/resendVerifyToken*"
+            "/verifyRegistration/*",
+            "/resendVerifyToken/*",
+            "/swagger-ui/index.html"
     };
 
     @Bean
@@ -34,4 +36,5 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
 }
